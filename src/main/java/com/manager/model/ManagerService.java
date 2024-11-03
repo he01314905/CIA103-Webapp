@@ -47,7 +47,9 @@ public class ManagerService {
 	public ManagerVO getOneManager(Integer managerNo) {
 		return dao.findByPrimaryKey(managerNo);
 	}
-
+	public ManagerVO getAP(String managerAccount,String managerPassword) {
+		return dao.findAP(managerAccount,managerPassword);
+	}
 	public List<ManagerVO> getAll() {
 		return dao.getAll();
 	}

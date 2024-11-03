@@ -1,7 +1,12 @@
 package com.manager.model;
 
-import java.util.*;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ManagerJDBCDAO implements ManagerDAO_interface {
 	String driver = "com.mysql.cj.jdbc.Driver";
@@ -18,8 +23,9 @@ public class ManagerJDBCDAO implements ManagerDAO_interface {
 	private static final String DELETE = 
 		"DELETE FROM manager where managerNo = ?";
 	private static final String UPDATE = 
-		"UPDATE manager set managerName=?, managerAccount=?, managerPassword=?, managerStatus=?, where managerNo = ?";
-
+		"UPDATE manager set managerName=?, managerAccount=?, managerPassword=?, managerStatus=? where managerNo = ?";
+	private static final String LOGIN = 
+			"SELECT * FROM manager where managerAccount=? AND managerPassword=?";
 	@Override
 	public void insert(ManagerVO managerVO) {
 
@@ -85,7 +91,6 @@ public class ManagerJDBCDAO implements ManagerDAO_interface {
 			pstmt.setString(3, managerVO.getManagerPassword());
 			pstmt.setInt(4, managerVO.getManagerstatus());
 			pstmt.setInt(5, managerVO.getManagerNo());
-
 			pstmt.executeUpdate();
 
 			// Handle any driver errors
@@ -183,8 +188,8 @@ public class ManagerJDBCDAO implements ManagerDAO_interface {
 				managerVO = new ManagerVO();
 				managerVO.setManagerNo(rs.getInt("managerNo"));
 				managerVO.setManagerName(rs.getString("managerName"));
-				managerVO.setManagerAccount(rs.getString("ManagerAccount"));
-				managerVO.setManagerPassword(rs.getString("ManagerPassword"));
+				managerVO.setManagerAccount(rs.getString("managerAccount"));
+				managerVO.setManagerPassword(rs.getString("managerPassword"));
 				managerVO.setManagerstatus(rs.getInt("managerstatus"));
 			}
 
@@ -284,50 +289,111 @@ public class ManagerJDBCDAO implements ManagerDAO_interface {
 		}
 		return list;
 	}
+	@Override
+	public ManagerVO findAP(String managerAccount ,String managerPassword) {
 
+		ManagerVO managerVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(LOGIN);
+
+			pstmt.setString(1, managerAccount);
+			pstmt.setString(2,managerPassword);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				// empVo 也稱為 Domain objects
+				managerVO = new ManagerVO();
+				managerVO.setManagerAccount(rs.getString("managerAccount"));
+				managerVO.setManagerPassword(rs.getString("managerPassword"));
+				
+			}
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return managerVO;
+	}
 	public static void main(String[] args) {
 
 		ManagerJDBCDAO dao = new ManagerJDBCDAO();
 
 		// 新增
-		ManagerVO managerVO1 = new ManagerVO();
-		
-		managerVO1.setManagerName("緯育");
-		managerVO1.setManagerAccount("tibame");
-		managerVO1.setManagerPassword("cia103");
-		managerVO1.setManagerstatus(1);
-		dao.insert(managerVO1);
+//		ManagerVO managerVO1 = new ManagerVO();
+//		
+//		managerVO1.setManagerName("緯育");
+//		managerVO1.setManagerAccount("tibame");
+//		managerVO1.setManagerPassword("cia103");
+//		managerVO1.setManagerstatus(2);
+//		dao.insert(managerVO1);
 
 		// 修改
-		ManagerVO managerVO2 = new ManagerVO();
-		managerVO2.setManagerNo(100);
-		managerVO2.setManagerName("緯育2");
-		managerVO2.setManagerAccount("tibame2");
-		managerVO2.setManagerPassword("cia103G2");
-		managerVO2.setManagerstatus(0);
-		dao.update(managerVO2);
+//		ManagerVO managerVO2 = new ManagerVO();
+//		managerVO2.setManagerName("緯育2");
+//		managerVO2.setManagerAccount("tibame2");
+//		managerVO2.setManagerPassword("cia103G2");
+//		managerVO2.setManagerstatus(1);
+//		managerVO2.setManagerNo(3);
+//		dao.update(managerVO2);
 
 		// 刪除
-		dao.delete(100);
+//		dao.delete(4);
 
 		// 查詢
-		ManagerVO managerVO3 = dao.findByPrimaryKey(1);
-		System.out.print(managerVO3.getManagerNo() + ",");
-		System.out.print(managerVO3.getManagerName() + ",");
-		System.out.print(managerVO3.getManagerAccount() + ",");
-		System.out.print(managerVO3.getManagerPassword() + ",");
-		System.out.print(managerVO3.getManagerstatus() + ",");
-		System.out.println("---------------------");
+//		ManagerVO managerVO3 = dao.findByPrimaryKey(1);
+//		System.out.print(managerVO3.getManagerNo() + ",");
+//		System.out.print(managerVO3.getManagerName() + ",");
+//		System.out.print(managerVO3.getManagerAccount() + ",");
+//		System.out.print(managerVO3.getManagerPassword() + ",");
+//		System.out.print(managerVO3.getManagerstatus() + ",");
+//		System.out.println("---------------------");
 
 		// 查詢
 		List<ManagerVO> list = dao.getAll();
-		for (ManagerVO Mana : list) {
-			System.out.print(Mana.getManagerNo() + ",");
-			System.out.print(Mana.getManagerName() + ",");
-			System.out.print(Mana.getManagerAccount() + ",");
-			System.out.print(Mana.getManagerPassword() + ",");
-			System.out.print(Mana.getManagerstatus() + ",");
+		for (ManagerVO Manager : list) {
+			System.out.print(Manager.getManagerNo() + ",");
+			System.out.print(Manager.getManagerName() + ",");
+			System.out.print(Manager.getManagerAccount() + ",");
+			System.out.print(Manager.getManagerPassword() + ",");
+			System.out.print(Manager.getManagerstatus());
 			System.out.println();
 		}
 	}
 }
+	

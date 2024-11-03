@@ -16,6 +16,13 @@ ManagerService managerSvc = new ManagerService();
 <title>所有員工資料 - listAllManager.jsp</title>
 
 <style>
+body{
+	background: url("https://s3-alpha-sig.figma.com/img/dfdb/7342/e97f5a6af1cf2872bb12d94cb62f2995?Expires=1730678400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=nJ8qFx0Y5zLo22-dO3WfTfB4t6JAdWsw20uauzDjlQhbN2tcJ09YMW0psMZxXb4XNEBfOSdWW~5v9oMrxdEmHFobX3iFgTWgzglH7R~-03Euac32oT-SSOAEC5AuaZnVk9YGRg5OwZZLQO4SuSdhr6IiCtrErqbWexeId792SyK-SUtY7JoEgIs7KxoBO3rBLqZR5JJtxGsrNhI7jAWX9fzvZ6y9c4cpK1EQ-xW24lur7dQo4WkjTFjkoAD9oexQwmYe8B7hZ8bOYJnTFHA6Tsy5LrU3RVwbPCheKtWm5DZA9n2LLTn0Dx01FDodOiJXktEpobiWyrcHxxxWdPUM5Q__") lightgray 50% / cover no-repeat;
+	
+	display:flex;
+	flex-direction:column;
+	align-items:center;
+}
   table#table-1 {
 	background-color: #CCCCFF;
     border: 2px solid black;
@@ -46,6 +53,17 @@ ManagerService managerSvc = new ManagerService();
     padding: 5px;
     text-align: center;
   }
+  input{
+  border-radius:10px;
+  }
+  input:hover{
+	cursor: pointer;
+	box-shadow: 2px 2px 1px black;
+}
+input:active{
+	box-shadow:3px 3px 4px black inset ,inset -3px -3px 3px  black;
+}
+  }
 </style>
 
 </head>
@@ -55,7 +73,7 @@ ManagerService managerSvc = new ManagerService();
 <table id="table-1">
 	<tr><td>
 		 <h3>所有員工資料 - listAllManager.jsp</h3>
-		 <h4><a href="select_page.jsp"><img src="<%= request.getContextPath()%>/back-end/images/back1.gif" width="100" height="32" border="0">回首頁</a></h4>
+		 <h4><a href="select_page.jsp"><img src="<%= request.getContextPath()%>/back-end/images/cat1.gif" width="150" height="100" border="0">回首頁</a></h4>
 	</td></tr>
 </table>
 
@@ -79,13 +97,13 @@ ManagerService managerSvc = new ManagerService();
 			<td>${managerVO.managerPassword}</td>
 			<td>${managerVO.managerstatus}</td>
 			<td>
-			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/manager/manager.do" style="margin-bottom: 0px;">
+			  <FORM METHOD="post" type="" ACTION="<%=request.getContextPath()%>/back-end/manager/manager.do" style="margin-bottom: 0px;">
 			     <input type="submit" value="修改">
-			     <input type="hidden" name="managerno"  value="${managerVO.managerNo}">
+			     <input type="hidden" name="managerNo"  value="${managerVO.managerNo}">
 			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
 			</td>
 			<td>
-			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/manager/manager.do" style="margin-bottom: 0px;">
+			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/back-end/manager/manager.do" style="margin-bottom: 0px;">
 			     <input type="submit" value="刪除">
 			     <input type="hidden" name="managerNo"  value="${managerVO.managerNo}">
 			     <input type="hidden" name="action" value="delete"></FORM>

@@ -19,10 +19,10 @@
   
   <servlet>
     <servlet-name>ManagerServlet</servlet-name>
-    <servlet-class>com.emp.controller.managerServlet</servlet-class>
+    <servlet-class>com.manager.controller.ManagerServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ManagerServlet</servlet-name>
-    <url-pattern>/manager/manager.do</url-pattern>
+    <url-pattern>/back-end/manager/manager.do</url-pattern>
   </servlet-mapping>
 </web-app>
