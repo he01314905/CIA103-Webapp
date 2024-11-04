@@ -219,15 +219,9 @@ String managerPassword = req.getParameter("managerPassword").trim();
 				}	else if(!managerPassword.trim().matches(managerPasswordReg)) { //以下練習正則(規)表示式(regular-expression)
 					errorMsgs.add("管理員密碼: 只能是英文字母、數字 , 且長度必需在2到10之間");
 	            }
-
-Integer managerstatus = Integer.valueOf(req.getParameter("managerstatus").trim());
-				String managerstatusReg = "^[0-1]$";
-				if (managerstatus == null ||managerstatus.toString().trim().length() == 0) {
-					errorMsgs.add("管理員狀態請勿空白");
-				}	else if(!managerstatus.toString().trim().matches(managerstatusReg)) { //以下練習正則(規)表示式(regular-expression)
-					errorMsgs.add("管理員狀態: 只能是0或1 ,0為離職,1為在職 ");
-	            }
-
+				Integer managerstatus=1;
+				 
+				
 				ManagerVO managerVO = new ManagerVO();
 				
 				managerVO.setManagerName(managerName);
@@ -304,6 +298,7 @@ req.setAttribute("managerVO", managerVO); // 含有輸入格式錯誤的empVO物
 //				out.println("</PRE>");
 //			}
 //		}
+		
 		if ("login".equals(action)) { // 來自update_emp_input.jsp的請求
 			
 			List<String> errorMsgs = new LinkedList<String>();
@@ -316,7 +311,7 @@ req.setAttribute("managerVO", managerVO); // 含有輸入格式錯誤的empVO物
 String managerAccount = req.getParameter("managerAccount");
 				String managerAccountReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
 				if (managerAccount == null || managerAccount.trim().length() == 0) {
-					errorMsgs.add("管理員姓名: 請勿空白");
+					errorMsgs.add("帳號請勿空白");
 				} else if(!managerAccount.trim().matches(managerAccountReg)) { //以下練習正則(規)表示式(regular-expression)
 					errorMsgs.add("管理員姓名: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
 	            }
@@ -324,7 +319,7 @@ String managerAccount = req.getParameter("managerAccount");
 String managerPassword = req.getParameter("managerPassword").trim();
 				String managerPasswordReg = "^[(a-zA-Z0-9)]{2,10}$";
 				if (managerPassword == null ||managerPassword.trim().length() == 0) {
-					errorMsgs.add("帳號請勿空白");
+					errorMsgs.add("密碼請勿空白");
 				}	else if(!managerPassword.trim().matches(managerPasswordReg)) { //以下練習正則(規)表示式(regular-expression)
 					errorMsgs.add("管理員帳號: 只能是英文字母、數字 , 且長度必需在2到10之間");
 	            }
@@ -333,7 +328,7 @@ String managerPassword = req.getParameter("managerPassword").trim();
 				managerVO.setManagerPassword(managerPassword);
 				ManagerService managerSvc = new ManagerService();
 				 managerVO = managerSvc.getAP(managerAccount,managerPassword);
-				if(managerVO == null) {
+				if(managerVO == null ) {
 					 errorMsgs.add("帳號或密碼錯誤，請重新輸入。");
 					 
 				}
@@ -343,11 +338,13 @@ String managerPassword = req.getParameter("managerPassword").trim();
 												.getRequestDispatcher("/back-end/manager/Login.jsp");
 										failureView.forward(req, res);
 										return;
-									}
+				}
 				
 				String url = "/back-end/manager/listAllManager.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
+				req.removeAttribute("errorMsgs");
 				successView.forward(req, res);
+				
 	}
 }
 }

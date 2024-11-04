@@ -7,6 +7,14 @@ public class ManagerVO implements java.io.Serializable{
 	private String managerAccount;
 	private String managerPassword;
 	private Integer managerstatus;
+	private String statusStr;
+	public String getStatusStr() {
+		return statusStr;
+	}
+	public void setStatusStr(Integer managerstatus) {
+		this.statusStr=managerstatus!= 1 ? "離職":"在職";
+		
+	}
 	public Integer getManagerNo() {
 		return managerNo;
 	}
@@ -35,6 +43,7 @@ public class ManagerVO implements java.io.Serializable{
 		return managerstatus;
 	}
 	public void setManagerstatus(Integer managerstatus) {
+		setStatusStr(managerstatus);
 		this.managerstatus = managerstatus;
 	}
 	

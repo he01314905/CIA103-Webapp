@@ -87,7 +87,7 @@
 	</tr>
 	<tr>
 		<td>ºÞ²z­ûª¬ºA:</td>
-		<td><input type="TEXT" name="managerstatus"  value="<%= (managerVO==null)? "1" : managerVO.getManagerstatus()%>" size="45"/></td>
+		<td><input type="TEXT" disabled name="managerstatus"  value="<%= (managerVO==null)? "1" : managerVO.getManagerstatus()%>" size="45"/></td>
 	</tr>
 
 

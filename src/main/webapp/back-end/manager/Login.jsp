@@ -7,6 +7,7 @@
 //見com.emp.controller.EmpServlet.java第163行存入req的empVO物件 (此為從資料庫取出的empVO, 也可以是輸入格式有錯誤時的empVO物件)
    ManagerVO managerVO = (ManagerVO) request.getAttribute("managerVO");
 %>
+
 <style>
 body{
 	background: url("https://s3-alpha-sig.figma.com/img/dfdb/7342/e97f5a6af1cf2872bb12d94cb62f2995?Expires=1730678400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=nJ8qFx0Y5zLo22-dO3WfTfB4t6JAdWsw20uauzDjlQhbN2tcJ09YMW0psMZxXb4XNEBfOSdWW~5v9oMrxdEmHFobX3iFgTWgzglH7R~-03Euac32oT-SSOAEC5AuaZnVk9YGRg5OwZZLQO4SuSdhr6IiCtrErqbWexeId792SyK-SUtY7JoEgIs7KxoBO3rBLqZR5JJtxGsrNhI7jAWX9fzvZ6y9c4cpK1EQ-xW24lur7dQo4WkjTFjkoAD9oexQwmYe8B7hZ8bOYJnTFHA6Tsy5LrU3RVwbPCheKtWm5DZA9n2LLTn0Dx01FDodOiJXktEpobiWyrcHxxxWdPUM5Q__") lightgray 50% / cover no-repeat;
@@ -14,14 +15,14 @@ body{
 	display:flex;
 	flex-direction:column;
 	align-items:center;
-	margin-top:150px;
+	margin-top:170px;
 }
 input{
 padding:10px;
 margin:10px;
 border-radius:10px;
 }
-
+	
 input#button{
 margin-left:230px;
 }
@@ -53,11 +54,11 @@ input#button:active{
 <FORM METHOD="post" ACTION="manager.do" name="form1">
 <table>
 	<tr>
-		<td>管理員帳號:</td>
+		<td><h3>管理員帳號:</h3></td>
 		<td><input type="TEXT" placeholder="請輸入帳號..." name="managerAccount" value="<%= (managerVO==null)? "" : managerVO.getManagerAccount()%>"    size="45"/></td>
 	</tr>
 	<tr>
-		<td>管理員密碼:</td>
+		<td><h3>管理員密碼:</h3></td>
 		<td><input type="TEXT" placeholder="請輸入密碼..." name="managerPassword"  value="<%= (managerVO==null)? "" : managerVO.getManagerPassword()%>"   size="45"/></td>
 	</tr>
 	</table>

@@ -8,6 +8,7 @@
 ManagerService managerSvc = new ManagerService();
     List<ManagerVO> list = managerSvc.getAll();
     pageContext.setAttribute("list",list);
+    
 %>
 
 
@@ -95,7 +96,7 @@ input:active{
 			<td>${managerVO.managerName}</td>
 			<td>${managerVO.managerAccount}</td>
 			<td>${managerVO.managerPassword}</td>
-			<td>${managerVO.managerstatus}</td>
+			<td>${managerVO.statusStr}</td>
 			<td>
 			  <FORM METHOD="post" type="" ACTION="<%=request.getContextPath()%>/back-end/manager/manager.do" style="margin-bottom: 0px;">
 			     <input type="submit" value="н╫зя">
@@ -111,7 +112,8 @@ input:active{
 		</tr>
 	</c:forEach>
 </table>
+<div>
 <%@ include file="page2.file" %>
-
+</div>
 </body>
 </html>
